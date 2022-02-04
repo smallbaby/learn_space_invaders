@@ -9,12 +9,13 @@ import pygame
 import os
 import time
 import random
-pygame.font.init()
 
+pygame.font.init()
 
 WIDTH, HEIGHT = 750, 750
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
+# 标题
 pygame.display.set_caption("Space Shooter Tutorial")
 
 # Load images
@@ -100,8 +101,11 @@ class Player(Ship):
                             self.lasers.remove(laser)
 
     def healthbar(self, window):
-        pygame.draw.rect(window, (255, 0, 0), (self.x, self.y + self.ship_img.get_height() + 10, self.ship_img.get_width(), 10))
-        pygame.draw.rect(window, (0, 255, 0), (self.x, self.y + self.ship_img.get_height() + 10, self.ship_img.get_width() * (self.health / self.max_health), 10))
+        pygame.draw.rect(window, (255, 0, 0),
+                         (self.x, self.y + self.ship_img.get_height() + 10, self.ship_img.get_width(), 10))
+        pygame.draw.rect(window, (0, 255, 0), (
+        self.x, self.y + self.ship_img.get_height() + 10, self.ship_img.get_width() * (self.health / self.max_health),
+        10))
 
     def draw(self, window):
         super().draw(window)
@@ -144,7 +148,7 @@ class Laser:
         self.y += vel
 
     def off_screen(self, height):
-        return not(height >= self.y >= 0)
+        return not (height >= self.y >= 0)
 
     def collision(self, obj):
         return collide(self, obj)
@@ -174,10 +178,10 @@ def main():
 
     player = Player(300, 650)
 
-    clock = pygame.time.Clock()
+    clock = pygame.time.Clock()  # 创建一个时钟对象来帮我们确定游戏要以多大的帧数运行
 
     def redraw_window():
-        WIN.blit(BG, (0,0))
+        WIN.blit(BG, (0, 0))
         lives_label = main_font.render(f"Lives: {lives}", 1, (255, 255, 255))
         level_label = main_font.render(f"level: {level}", 1, (255, 255, 255))
 
@@ -191,12 +195,12 @@ def main():
 
         if lost:
             lost_label = lost_font.render("You Lost!!!", 1, (255, 255, 255))
-            WIN.blit(lost_label, (WIDTH / 2 - lost_label.get_width()/2, 350))
+            WIN.blit(lost_label, (WIDTH / 2 - lost_label.get_width() / 2, 350))
 
         pygame.display.update()
 
     while run:
-        clock.tick(PTS)
+        clock.tick(PTS)  # 通过时钟对象，指定循环频率，每秒循环60次
         redraw_window()
         if lives <= 0 or player.health <= 0:
             lost = True
@@ -256,7 +260,7 @@ def main_menu():
     while run:
         WIN.blit(BG, (0, 0))
         title_label = title_font.render("Press the mouse to begin...", 1, (255, 255, 255))
-        WIN.blit(title_label, (WIDTH/2 - title_label.get_width() / 2, 350))
+        WIN.blit(title_label, (WIDTH / 2 - title_label.get_width() / 2, 350))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -268,10 +272,3 @@ def main_menu():
 
 
 main_menu()
-
-
-
-
-
-
-
